@@ -56,6 +56,8 @@ document.querySelector('.again').addEventListener('click', function () {
 
   document.querySelector('.message').textContent = 'Start guessing...';
   document.querySelector('.score').textContent = '20';
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').textContent = '?';
   score = 20;
   number = random();
   console.log('Number after clicking again= ', number);
