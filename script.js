@@ -40,8 +40,6 @@
 
 
 
-
-
 */
 
 //74. Implementing the Game Logic
@@ -73,13 +71,17 @@ document.querySelector('.check').addEventListener('click', function () {
   } else if (guess > number) {
     document.querySelector('.message').textContent =
       '👆Your Number Is Higher!👆';
+    document.querySelector('.number').textContent = '📈';
     score--;
   } else if (guess < number) {
     document.querySelector('.message').textContent =
       '👇Your Number Is Lower!👇';
+    document.querySelector('.number').textContent = '📉';
     score--;
   } else {
     document.querySelector('.message').textContent = '🎉Correct Number🎉';
+    document.querySelector('.number').textContent = '🏆';
+    document.querySelector('body').style.backgroundColor = 'green';
     if (score > highscore) {
       document.querySelector('.highscore').textContent = score;
       highscore = score;
@@ -89,3 +91,6 @@ document.querySelector('.check').addEventListener('click', function () {
 
   document.querySelector('.score').textContent = score;
 });
+
+// console.log(document.querySelector('body').style.backgroundColor);
+// document.querySelector('body').style.backgroundColor = 'green';
