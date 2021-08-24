@@ -40,7 +40,7 @@
 
 
 
-*/
+
 
 //74. Implementing the Game Logic
 const random = function () {
@@ -53,12 +53,12 @@ console.log('random number= ', number); //random number between 1 to 20
 
 document.querySelector('.again').addEventListener('click', function () {
   // window.location.reload();Start guessing...
-
+  score = 20;
   document.querySelector('.message').textContent = 'Start guessing...';
-  document.querySelector('.score').textContent = '20';
+  document.querySelector('.score').textContent = score;
   document.querySelector('body').style.backgroundColor = '#222';
   document.querySelector('.number').textContent = '?';
-  score = 20;
+  document.querySelector('.number').style.width = '15rem';
   number = random();
   console.log('Number after clicking again= ', number);
 });
@@ -82,7 +82,9 @@ document.querySelector('.check').addEventListener('click', function () {
     score--;
   } else {
     document.querySelector('.message').textContent = '🎉Correct Number🎉';
+
     document.querySelector('.number').textContent = '🏆';
+    document.querySelector('.number').style.width = '30rem';
     document.querySelector('body').style.backgroundColor = 'green';
     if (score > highscore) {
       document.querySelector('.highscore').textContent = score;
@@ -96,3 +98,59 @@ document.querySelector('.check').addEventListener('click', function () {
 
 // console.log(document.querySelector('body').style.backgroundColor);
 // document.querySelector('body').style.backgroundColor = 'green';
+
+
+
+*/
+
+//78. Refactoring Our Code: The DRY Principle
+const random = function () {
+  return Math.trunc(Math.random() * 20 + 1);
+};
+
+const classTextContentCreator = function (className, messageInput) {
+  document.querySelector(className).textContent = messageInput;
+};
+
+let number = random();
+let score = 20;
+let highscore = 0;
+console.log('random number= ', number);
+
+document.querySelector('.again').addEventListener('click', function () {
+  score = 20;
+  classTextContentCreator('.message', 'Start guessing...');
+  classTextContentCreator('.score', score);
+  classTextContentCreator('.number', '?');
+  document.querySelector('body').style.backgroundColor = '#222';
+  document.querySelector('.number').style.width = '15rem';
+  number = random();
+  console.log('Number after clicking again= ', number);
+});
+
+document.querySelector('.check').addEventListener('click', function () {
+  const guess = Number(document.querySelector('.guess').value);
+
+  if (!guess || guess > 20 || guess < 0) {
+    classTextContentCreator('.message', '⛔Wrong Number!⛔');
+  } else if (guess > number) {
+    classTextContentCreator('.message', '👆Your Number Is Higher!👆');
+    classTextContentCreator('.number', '📈');
+    score--;
+  } else if (guess < number) {
+    classTextContentCreator('.message', '👇Your Number Is Lower!👇');
+    classTextContentCreator('.number', '📉');
+    score--;
+  } else {
+    classTextContentCreator('.message', '🎉Correct Number🎉');
+    classTextContentCreator('.number', '🏆');
+    document.querySelector('.number').style.width = '30rem';
+    document.querySelector('body').style.backgroundColor = 'green';
+    if (score > highscore) {
+      classTextContentCreator('.highscore', score);
+      highscore = score;
+    }
+  }
+  document.querySelector('.guess').value = '';
+  classTextContentCreator('.score', score);
+});
